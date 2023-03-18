@@ -47,6 +47,20 @@
 
 \*\*Please follow the steps below to setup this project in your local computer
 
+## Setup
+git clone https://github.com/teke85/OOP-school-library
+
+cd OOP-school-library
+
+## Install
+bundle install
+
+## Usage
+irb
+
+## Run tests
+rspec spec
+
 ### Prerequisites
 
 A basic understanding of Ruby and Git
