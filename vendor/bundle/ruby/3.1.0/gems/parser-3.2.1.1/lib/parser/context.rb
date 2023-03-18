@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Parser
   # Context of parsing that is represented by a stack of scopes.
   #
@@ -24,7 +22,7 @@ module Parser
       in_class
       in_block
       in_lambda
-    ]
+    ].freeze
 
     def initialize
       reset
