@@ -48,6 +48,10 @@
 
 \*\*Please follow the steps below to setup this project in your local computer
 
+### Prerequisites
+
+A basic understanding of Ruby and Git
+
 ## Setup
 git clone https://github.com/teke85/OOP-school-library
 
@@ -61,14 +65,6 @@ irb
 
 ## Run tests
 rspec spec
-
-### Prerequisites
-
-A basic understanding of Ruby and Git
-
-### Usage
-
-1. Install Ruby
 
 <!-- AUTHORS -->
 
