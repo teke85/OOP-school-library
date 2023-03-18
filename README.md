@@ -51,10 +51,19 @@
 
 A basic understanding of Ruby and Git
 
-### Usage
+### Setup
+git clone https://github.com/teke85/OOP-school-library
 
-1. Install Ruby
-2. Clone this repo `git clone https://github.com/teke85/OOP-school-library`
+Cd OOP-school-library
+
+### Install
+bundle install
+
+### Usage
+irb
+
+### Run tests
+rspec spec
 
 <!-- AUTHORS -->
 
