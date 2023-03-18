@@ -1,7 +1,10 @@
+require './nameable'
+
 class Person < Nameable
   attr_reader :name
 
   def initialize(name)
+    super()
     @name = name
   end
 

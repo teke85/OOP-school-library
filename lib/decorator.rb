@@ -1,13 +1,14 @@
 require './nameable'
 
-class Decorator < Nameable
-   attr_accessor :nameable
+class Person < Nameable
+  attr_reader :name
 
-  def initialize(nameable)
-    @nameable = nameable
+  def initialize(name)
+    super()
+    @name = name
   end
 
   def correct_name
-    @nameable.correct_name
+    name
   end
 end
