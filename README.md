@@ -43,9 +43,27 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Usage
+## Getting Started
 
-1. Install Ruby
+\*\*Please follow the steps below to setup this project in your local computer
+
+### Prerequisites
+
+A basic understanding of Ruby and Git
+
+### Setup
+git clone https://github.com/teke85/OOP-school-library
+
+Cd OOP-school-library
+
+### Install
+bundle install
+
+### Usage
+irb
+
+### Run tests
+rspec spec
 
 <!-- AUTHORS -->
 
