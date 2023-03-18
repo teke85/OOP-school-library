@@ -43,14 +43,13 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Prerequisites
+
+A basic understanding of Ruby and Git
 
 ## Getting Started
 
 \*\*Please follow the steps below to setup this project in your local computer
-
-### Prerequisites
-
-A basic understanding of Ruby and Git
 
 ## Setup
 git clone https://github.com/teke85/OOP-school-library
