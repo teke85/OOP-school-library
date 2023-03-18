@@ -43,7 +43,7 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Prerequisites
+## Prerequisites
 
 A basic understanding of Ruby and Git
 
