@@ -1,4 +1,3 @@
-#frozen_string_literal: false
 # This file requires the implementations of ruby core's custom objects for
 # serialisation/deserialisation.
 

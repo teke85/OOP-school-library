@@ -1,4 +1,3 @@
-#frozen_string_literal: false
 require 'json/version'
 require 'json/generic_object'
 
@@ -41,9 +40,10 @@ module JSON
     # the given path, an ArgumentError is raised.
     def deep_const_get(path) # :nodoc:
       path.to_s.split(/::/).inject(Object) do |p, c|
-        case
-        when c.empty?                  then p
-        when p.const_defined?(c, true) then p.const_get(c)
+        if c.empty?
+          p
+        elsif p.const_defined?(c, true)
+          p.const_get(c)
         else
           begin
             p.const_missing(c)
@@ -56,10 +56,11 @@ module JSON
 
     # Set the module _generator_ to be used by JSON.
     def generator=(generator) # :nodoc:
-      old, $VERBOSE = $VERBOSE, nil
+      old = $VERBOSE
+      $VERBOSE = nil
       @generator = generator
       generator_methods = generator::GeneratorMethods
-      for const in generator_methods.constants
+      generator_methods.constants.each do |const|
         klass = deep_const_get(const)
         modul = generator_methods.const_get(const)
         klass.class_eval do
@@ -70,7 +71,7 @@ module JSON
         end
       end
       self.state = generator::State
-      const_set :State, self.state
+      const_set :State, state
       const_set :SAFE_STATE_PROTOTYPE, State.new # for JRuby
       const_set :FAST_STATE_PROTOTYPE, create_fast_state
       const_set :PRETTY_STATE_PROTOTYPE, create_pretty_state
@@ -80,20 +81,20 @@ module JSON
 
     def create_fast_state
       State.new(
-        :indent         => '',
-        :space          => '',
-        :object_nl      => "",
-        :array_nl       => "",
-        :max_nesting    => false
+        indent: '',
+        space: '',
+        object_nl: '',
+        array_nl: '',
+        max_nesting: false
       )
     end
 
     def create_pretty_state
       State.new(
-        :indent         => '  ',
-        :space          => ' ',
-        :object_nl      => "\n",
-        :array_nl       => "\n"
+        indent: '  ',
+        space: ' ',
+        object_nl: "\n",
+        array_nl: "\n"
       )
     end
 
@@ -111,7 +112,7 @@ module JSON
   DEFAULT_CREATE_ID = 'json_class'.freeze
   private_constant :DEFAULT_CREATE_ID
 
-  CREATE_ID_TLS_KEY = "JSON.create_id".freeze
+  CREATE_ID_TLS_KEY = 'JSON.create_id'.freeze
   private_constant :CREATE_ID_TLS_KEY
 
   # Sets create identifier, which is used to decide if the _json_create_
@@ -127,9 +128,9 @@ module JSON
     Thread.current[CREATE_ID_TLS_KEY] || DEFAULT_CREATE_ID
   end
 
-  NaN           = 0.0/0
+  NaN = 0.0 / 0
 
-  Infinity      = 1.0/0
+  Infinity = 1.0 / 0
 
   MinusInfinity = -Infinity
 
@@ -213,7 +214,7 @@ module JSON
   #   JSON.parse('')
   #
   def parse(source, opts = {})
-    Parser.new(source, **(opts||{})).parse
+    Parser.new(source, **(opts || {})).parse
   end
 
   # :call-seq:
@@ -229,10 +230,10 @@ module JSON
   # - Option +allow_nan+, if not provided, defaults to +true+.
   def parse!(source, opts = {})
     opts = {
-      :max_nesting  => false,
-      :allow_nan    => true
+      max_nesting: false,
+      allow_nan: true
     }.merge(opts)
-    Parser.new(source, **(opts||{})).parse
+    Parser.new(source, **(opts || {})).parse
   end
 
   # :call-seq:
@@ -294,8 +295,9 @@ module JSON
   #   JSON.generate(a)
   #
   def generate(obj, opts = nil)
-    if State === opts
-      state, opts = opts, nil
+    if opts.is_a?(State)
+      state = opts
+      opts = nil
     else
       state = State.new
     end
@@ -333,8 +335,9 @@ module JSON
   #   # Raises SystemStackError (stack level too deep):
   #   JSON.fast_generate(a)
   def fast_generate(obj, opts = nil)
-    if State === opts
-      state, opts = opts, nil
+    if opts.is_a?(State)
+      state = opts
+      opts = nil
     else
       state = JSON.create_fast_state
     end
@@ -388,8 +391,9 @@ module JSON
   #   }
   #
   def pretty_generate(obj, opts = nil)
-    if State === opts
-      state, opts = opts, nil
+    if opts.is_a?(State)
+      state = opts
+      opts = nil
     else
       state = JSON.create_pretty_state
     end
@@ -420,10 +424,10 @@ module JSON
     attr_accessor :load_default_options
   end
   self.load_default_options = {
-    :max_nesting      => false,
-    :allow_nan        => true,
-    :allow_blank       => true,
-    :create_additions => true,
+    max_nesting: false,
+    allow_nan: true,
+    allow_blank: true,
+    create_additions: true
   }
 
   # :call-seq:
@@ -563,9 +567,7 @@ module JSON
     elsif source.respond_to?(:read)
       source = source.read
     end
-    if opts[:allow_blank] && (source.nil? || source.empty?)
-      source = 'null'
-    end
+    source = 'null' if opts[:allow_blank] && (source.nil? || source.empty?)
     result = parse(source, opts)
     recurse_proc(result, &proc) if proc
     result
@@ -576,13 +578,13 @@ module JSON
     case result
     when Array
       result.each { |x| recurse_proc x, &proc }
-      proc.call result
     when Hash
-      result.each { |x, y| recurse_proc x, &proc; recurse_proc y, &proc }
-      proc.call result
-    else
-      proc.call result
+      result.each do |x, y|
+        recurse_proc x, &proc
+        recurse_proc y, &proc
+      end
     end
+    proc.call result
   end
 
   alias restore load
@@ -596,9 +598,9 @@ module JSON
     attr_accessor :dump_default_options
   end
   self.dump_default_options = {
-    :max_nesting => false,
-    :allow_nan   => true,
-    :escape_slash => false,
+    max_nesting: false,
+    allow_nan: true,
+    escape_slash: false
   }
 
   # :call-seq:
@@ -637,7 +639,7 @@ module JSON
       end
     end
     opts = JSON.dump_default_options
-    opts = opts.merge(:max_nesting => limit) if limit
+    opts = opts.merge(max_nesting: limit) if limit
     result = generate(obj, opts)
     if anIO
       anIO.write result
@@ -646,7 +648,7 @@ module JSON
       result
     end
   rescue JSON::NestingError
-    raise ArgumentError, "exceed depth limit"
+    raise ArgumentError, 'exceed depth limit'
   end
 
   # Encodes string using String.encode.
@@ -662,7 +664,7 @@ module ::Kernel
   # one line.
   def j(*objs)
     objs.each do |obj|
-      puts JSON::generate(obj, :allow_nan => true, :max_nesting => false)
+      puts JSON.generate(obj, allow_nan: true, max_nesting: false)
     end
     nil
   end
@@ -671,7 +673,7 @@ module ::Kernel
   # indentation and over many lines.
   def jj(*objs)
     objs.each do |obj|
-      puts JSON::pretty_generate(obj, :allow_nan => true, :max_nesting => false)
+      puts JSON.pretty_generate(obj, allow_nan: true, max_nesting: false)
     end
     nil
   end

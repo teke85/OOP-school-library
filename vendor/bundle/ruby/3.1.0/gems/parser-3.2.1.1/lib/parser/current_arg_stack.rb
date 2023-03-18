@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Parser
   # Stack that holds names of current arguments,
   # i.e. while parsing
@@ -20,7 +18,7 @@ module Parser
     end
 
     def empty?
-      @stack.size == 0
+      @stack.empty?
     end
 
     def push(value)

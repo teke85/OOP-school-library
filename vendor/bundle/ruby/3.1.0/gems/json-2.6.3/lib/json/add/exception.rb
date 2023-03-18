@@ -1,10 +1,6 @@
-#frozen_string_literal: false
-unless defined?(::JSON::JSON_LOADED) and ::JSON::JSON_LOADED
-  require 'json'
-end
+require 'json' unless defined?(JSON::JSON_LOADED) and JSON::JSON_LOADED
 
 class Exception
-
   # Deserializes JSON string by constructing new Exception object with message
   # <tt>m</tt> and backtrace <tt>b</tt> serialized with <tt>to_json</tt>
   def self.json_create(object)
@@ -18,8 +14,8 @@ class Exception
   def as_json(*)
     {
       JSON.create_id => self.class.name,
-      'm'            => message,
-      'b'            => backtrace,
+      'm' => message,
+      'b' => backtrace
     }
   end
 

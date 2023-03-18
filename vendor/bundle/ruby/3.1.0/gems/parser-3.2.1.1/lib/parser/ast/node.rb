@@ -1,8 +1,5 @@
-# frozen_string_literal: true
-
 module Parser
   module AST
-
     ##
     # {Parser::AST::Node} contains information about a single AST node and its
     # child nodes. It extends the basic [AST::Node](https://www.rubydoc.info/gems/ast/AST/Node)
@@ -28,13 +25,12 @@ module Parser
       #  of the node.
       #
       def assign_properties(properties)
-        if (location = properties[:location])
-          location = location.dup if location.frozen?
-          location.node = self
-          @location = location
-        end
+        return unless (location = properties[:location])
+
+        location = location.dup if location.frozen?
+        location.node = self
+        @location = location
       end
     end
-
   end
 end
