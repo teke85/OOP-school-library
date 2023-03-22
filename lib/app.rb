@@ -38,22 +38,10 @@ class App
   end
 
   def create_student
-<<<<<<< HEAD
     get_input = Options.new
     age = get_input.get_input('Age: ', :to_i)
     name = get_input.get_input('Name: ')
     permission = get_input.get_input('Has parent permission? [Y/N]:  ', :downcase)
-=======
-    print 'Name:'
-    name = gets.chomp
-
-    print 'Age:'
-    age = gets.chomp
-
-    print 'Has Parent permission? [Y/N]'
-    permission = gets.chomp
-
->>>>>>> 12f41ed1b8bbed46aebfe5e12c5384ffde736445
     student = Student.new(age, name, parent_permission: permission)
     @people.push(student)
     puts 'Student Created Successfully'
