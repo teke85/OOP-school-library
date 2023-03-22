@@ -58,7 +58,6 @@ class App
   end
 
   def create_person
-    puts 'Do you want to  create a student (1) or a teacher(2)?'
     input_result = select_person_type
 
     case input_result
