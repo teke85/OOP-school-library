@@ -1,5 +1,6 @@
 require './app'
 require './options'
+
 def main
   # create a new instance of 'App'
   app = App.new

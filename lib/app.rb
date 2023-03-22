@@ -38,29 +38,20 @@ class App
   end
 
   def create_student
-    print 'Name:'
-    name = gets.chomp
-
-    print 'Age:'
-    age = gets.chomp
-
-    print 'Has Parent permission? [Y/N]'
-    permission = gets.chomp
-
+    get_input = Options.new
+    age = get_input.get_input('Age: ', :to_i)
+    name = get_input.get_input('Name: ')
+    permission = get_input.get_input('Has parent permission? [Y/N]:  ', :downcase)
     student = Student.new(age, name, parent_permission: permission)
     @people.push(student)
     puts 'Student Created Successfully'
   end
 
   def create_teacher
-    print 'Specialization:'
-    specialization = gets.chomp
-
-    print 'Age:'
-    age = gets.chomp
-
-    print 'Name:'
-    name = gets.chomp
+    get_input = Options.new
+    age = get_input.get_input('Age: ', :to_i)
+    name = get_input.get_input('Name: ')
+    specialization = get_input.get_input('Specialization: ')
 
     @people << Teacher.new(age, name, specialization: specialization)
     puts 'Teacher Created Successfully'
@@ -68,7 +59,7 @@ class App
 
   def create_person
     puts 'Do you want to  create a student (1) or a teacher(2)?'
-    input_result = gets.chomp.to_i
+    input_result = select_person_type
 
     case input_result
     when 1
@@ -78,12 +69,15 @@ class App
     end
   end
 
-  def create_book
-    print 'Title: '
-    title = gets.chomp
+  def select_person_type
+    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    gets.chomp.to_i
+  end
 
-    print 'Author: '
-    author = gets.chomp
+  def create_book
+    get_input = Actions.new
+    title = get_input.get_input('Title:')
+    author = get_input.get_input('Author:')
 
     book = Book.new(title, author)
     @books << book
@@ -92,6 +86,7 @@ class App
   end
 
   def create_rental
+    get_input = Actions.new
     if @books.empty?
       puts 'No book record found'
     elsif @people.empty?
@@ -102,17 +97,16 @@ class App
         puts "#{index}) Title: #{book.title}, Author: #{book.author}"
       end
 
-      book_index = gets.chomp.to_i
+      book_index = get_input.get_input('Book Index: ', :to_i)
 
       puts 'Select a person from the following list by number (not ID)'
       @people.each_with_index do |person, index|
         puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
       end
 
-      person_index = gets.chomp.to_i
+      person_index = get_input.get_input('List Number: ', :to_i)
 
-      print 'Date: '
-      date = gets.chomp
+      date = get_input.get_input('Date: ')
 
       @rentals << Rental.new(date, @books[book_index], @people[person_index])
       puts 'Rental created successfully'
@@ -120,8 +114,8 @@ class App
   end
 
   def list_rentals
-    print 'ID of person: '
-    id = gets.chomp.to_i
+    get_input = Actions.new
+    id = get_input.get_input('ID of person: ', :to_i)
 
     rentals = @rentals.filter { |rental| rental.person.id == id }
 
