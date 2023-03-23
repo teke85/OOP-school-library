@@ -21,5 +21,10 @@ class Person < Nameable
 
   attr_reader :id, :rentals
   attr_accessor :name, :age
-  private :of_age?
+
+  private
+
+  def of_age?
+    @age >= 18
+  end
 end
