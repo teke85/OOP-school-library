@@ -1,6 +1,6 @@
 require './nameable'
 
-class Person < Nameable
+class Decorator < Nameable
   attr_reader :name
 
   def initialize(name)
