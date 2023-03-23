@@ -99,14 +99,14 @@ class App
     else
       puts 'Select a book from the following list by number'
       @books.each_with_index do |book, index|
-        puts "#{index}) Title: #{book.title}, Author: #{book.author}"
+        puts "#{index}) Title: #{book['title']}, Author: #{book['author']}"
       end
 
       book_index = get_input.get_input('Book Index: ', :to_i)
 
       puts 'Select a person from the following list by number (not ID)'
       @people.each_with_index do |person, index|
-        puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+        puts "#{index}) [#{person['class']}] Name: #{person['name']}, ID: #{person['id']}, Age: #{person['age']}"
       end
 
       person_index = get_input.get_input('List Number: ', :to_i)
