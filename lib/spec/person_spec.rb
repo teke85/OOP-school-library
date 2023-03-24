@@ -16,7 +16,6 @@ describe Person do
     end
   end
 
-
   describe '#name' do
     it 'returns the correct name' do
       expect(person.name).to eq('John')
