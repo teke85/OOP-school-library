@@ -2,11 +2,11 @@ require_relative '../teacher'
 require_relative '../person'
 
 RSpec.describe Teacher do
-  subject(:teacher) { described_class.new(12, 'Mary', specialization: 'Web development') }
+  subject(:teacher) { described_class.new(12, 'Brenda', specialization: 'Web development') }
 
   describe '#name' do
     it 'returns the correct name' do
-      expect(teacher.name).to eq 'Mary'
+      expect(teacher.name).to eq 'Brenda'
     end
   end
 
